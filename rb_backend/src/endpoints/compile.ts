@@ -1,6 +1,7 @@
 export const compile = (app: any) => {
-  app.get("/compile", async (req: any, res: any, next: any) => {
+  app.post("/compile", async (req: any, res: any, next: any) => {
     try {
+      console.log(req.body);
       res.json([]);
     } catch (error) {
       console.log(console.error());

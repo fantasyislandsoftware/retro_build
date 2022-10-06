@@ -6,7 +6,6 @@ var fs = require('fs');
 export const sync = (app: any) => {
   app.post("/sync", async (req: any, res: any, next: any) => {
     try {
-      //console.log(req.body);
       req.body.files.map((item : any) => {
         const fileName = path.basename(item.path);
         let _path = item.path.slice(0,-fileName.length);
@@ -15,7 +14,7 @@ export const sync = (app: any) => {
         }
         recursiveMakeDir(_path);
         const buffer : Buffer = item.file;
-        fs.writeFileSync(`${paths.workspaces}/${_path}/${fileName}`, buffer);
+        fs.writeFileSync(`${paths.workspaces}/${_path}/${fileName}`, buffer,'base64');
       })
       res.json([]);
     } catch (error) {

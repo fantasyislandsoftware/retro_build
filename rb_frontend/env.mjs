@@ -1,0 +1,1 @@
+export const env = { apiBaseAddress: 'http://localhost:4321' }

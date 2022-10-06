@@ -1,22 +1,22 @@
 import request from "sync-request";
 import fs from "fs";
-import { execFileSync, execSync } from "child_process";
+import { execSync } from "child_process";
+import { env } from './env.mjs';
 
-export const sync = (paths) => {
-    console.log("Syncing folders...");
+export const func_sync = (paths) => {
+    console.log("Syncing...");
     let files = [];
     paths.map((path) => {
         const list = execSync(`find ${path} -type f`).toString().split('\n');
         list.map((item) => {
             if (item !== '' && item !== path) {
                 const realPath = execSync(`realpath ${item}`).toString().trimEnd();
-                const file = fs.readFileSync(realPath, "utf8");
-                files.push({ path: realPath.trimEnd(), file: file });
+                const file = fs.readFileSync(realPath, "base64");
+                files.push({ path: realPath, file: file, modified: fs.statSync(realPath).mtime });
             }
         })
     });
-    //console.log(files);
-    const res = request("POST", "http://localhost:4321/sync", {
+    const res = request("POST", `${env.apiBaseAddress}/sync`, {
         json: { files },
     });
     return JSON.parse(res.getBody("utf8"));

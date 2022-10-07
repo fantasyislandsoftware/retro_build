@@ -3,7 +3,7 @@ import fs from "fs";
 import { execSync } from "child_process";
 import { env } from './env.mjs';
 
-export const func_sync = (paths) => {
+export const syncFunc = (paths) => {
     console.log("Syncing...");
     let files = [];
     paths.map((path) => {

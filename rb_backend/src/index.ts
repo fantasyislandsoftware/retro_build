@@ -1,5 +1,5 @@
 import express from 'express';
-import { compile } from "./endpoints/compile";
+import { compileWithZ88DK } from "./endpoints/compileWithZ88DK";
 import { sync } from "./endpoints/sync";
 
 const bodyParser = require("body-parser");
@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-compile(app);
+compileWithZ88DK(app);
 sync(app);
 
 const port = 4321;

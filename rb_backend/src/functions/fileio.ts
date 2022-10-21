@@ -3,11 +3,13 @@ import { paths } from "../constants/paths";
 
 export const recursiveMakeDir = (path: string) => {
   const folders = path.split("/");
-  let createPath = paths.workspaces;
+  let createPath = "";
   folders.map((folder) => {
-    createPath = createPath + "/" + folder;
-    if (!fs.existsSync(createPath)) {
-      fs.mkdirSync(createPath);
+    if (folder !== "") {
+      createPath = createPath + "/" + folder;
+      if (!fs.existsSync(createPath)) {
+        fs.mkdirSync(createPath);
+      }
     }
   });
 };

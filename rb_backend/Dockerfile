@@ -1,7 +1,8 @@
-#FROM node:14 as base
-FROM alpine:latest as base
+FROM i386/alpine:latest as base
 
 RUN apk add --update npm
+
+RUN apk add --no-cache wine freetype nano
 
 LABEL Version="0.8" \
       Date="2018-Apr-10" \

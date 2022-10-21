@@ -1,23 +1,30 @@
 import request from "sync-request";
 import fs from "fs";
 import { execSync } from "child_process";
-import { env } from './env.mjs';
+import { env } from "./env.mjs";
+import { handlePostRequest } from "./requestHandler.mjs";
 
-export const syncFunc = (paths) => {
-    console.log("Syncing...");
+export const syncFunc = (name, paths) => {
+    console.log("syncing...");
     let files = [];
     paths.map((path) => {
-        const list = execSync(`find ${path} -type f`).toString().split('\n');
-        list.map((item) => {
-            if (item !== '' && item !== path) {
-                const realPath = execSync(`realpath ${item}`).toString().trimEnd();
-                const file = fs.readFileSync(realPath, "base64");
-                files.push({ path: realPath, file: file, modified: fs.statSync(realPath).mtime });
+        //console.log(path);
+
+        /* Get recursive list of paths */
+        const dirList = execSync(`find ${path} -type f`).toString().split("\n");
+
+        /* Build up payload */
+        dirList.map((path) => {
+            if (path !== "") {
+                files.push({
+                    relativePath: path,
+                    fullPath: execSync(`realpath ${path}`).toString().trimEnd(),
+                    fileData: fs.readFileSync(path, "base64"),
+                    modified: fs.statSync(path).mtime,
+                });
             }
-        })
+        });
+        //console.log(files);
     });
-    const res = request("POST", `${env.apiBaseAddress}/sync`, {
-        json: { files },
-    });
-    return JSON.parse(res.getBody("utf8"));
+    handlePostRequest("sync", { name: name, files: files });
 };

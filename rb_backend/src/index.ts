@@ -3,6 +3,7 @@ import { compileWithZ88DK } from "./endpoints/compileWithZ88DK";
 import { init } from "./endpoints/init";
 import { sync } from "./endpoints/sync";
 import { compileTape } from "./endpoints/compileTape";
+import { download } from "./endpoints/download";
 import bodyParser from "body-parser";
 
 var cors = require("cors");
@@ -17,6 +18,7 @@ init(app);
 sync(app);
 compileWithZ88DK(app);
 compileTape(app);
+download(app);
 
 const port = 4321;
 app.listen(port, () => {

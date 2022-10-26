@@ -1,14 +1,14 @@
 import { paths } from "../constants/paths";
 import { recursiveMakeDir } from "../functions/fileio";
+import { getWorkspacePath } from "../functions/fileio";
 var path = require("path");
 var fs = require("fs");
 import getUuid from "uuid-by-string";
 
 const saveEnvVars = (name : string, vars: any) => {
-  const projectWorkspacePath = `${paths.workspaces}/${getUuid(name)}`;
+  const projectWorkspacePath = getWorkspacePath(name);
   recursiveMakeDir(projectWorkspacePath);
-  console.log(vars);
-  //fs.writeFileSync(`${projectWorkspacePath}/env.json`, JSON.stringify(vars));
+  fs.writeFileSync(`${projectWorkspacePath}/env.json`, JSON.stringify(vars));
 };
 
 export const init = (app: any) => {

@@ -7,12 +7,23 @@ export const handlePostRequest = (endpoint, json) => {
             json: json,
         });
         if (res.statusCode === 200) {
-            return JSON.parse(res.getBody("utf8"));
+            let data = JSON.parse(res.getBody("utf8"));
+            if (data.std) {
+                console.log('');
+                console.log(data.std);
+            }
+            if (data.error) {
+                console.log('');
+                console.log(data.error);
+            }
+            return data;
         } else {
+            console.log('');
             console.log(`error: ${res.statusCode}`);
             process.exit();
         }
     } catch (error) {
+        console.log('');
         console.log(error);
     }
 };

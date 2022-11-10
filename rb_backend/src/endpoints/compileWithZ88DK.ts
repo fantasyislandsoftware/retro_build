@@ -20,7 +20,7 @@ export const compileWithZ88DK = (app: any) => {
     
     /* Assemble the cmd for zcc */
     path = dirList[path];
-    const cmd = `cd ${workspacePath}/${path} && zcc +zx -vn -zorg=50000 -startup=31 -clib=sdcc_iy ${fileName} -o ${name}.bin`;
+    const cmd = `cd ${workspacePath}/${path} && zcc +zx -vn -zorg=50000 -startup=0 ${fileName} -o ${name}.bin`;
     
     /* Compile */
     try {

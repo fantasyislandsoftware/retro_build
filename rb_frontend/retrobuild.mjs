@@ -43,8 +43,28 @@ export const sync = (name, paths) => {
 };
 
 export const compileWithZ88DK = (name, path) => {
-    process.stdout.write("compiling...");
+    process.stdout.write("compiling with Z88DK...");
     handlePostRequest("compileWithZ88DK", { name: name, path: path });
+    console.log("ok");
+};
+
+export const compileWithZXBC = (name, srcPath, dstPath) => {
+    process.stdout.write("compiling with ZXBC...");
+    handlePostRequest("compileWithZXBC", {
+        name: name,
+        srcPath: srcPath,
+        dstPath: dstPath,
+    });
+    console.log("ok");
+};
+
+export const compileWithZXBASM = (name, srcPath, dstPath) => {
+    process.stdout.write("compiling with ZXBASM...");
+    handlePostRequest("compileWithZXBASM", {
+        name: name,
+        srcPath: srcPath,
+        dstPath: dstPath,
+    });
     console.log("ok");
 };
 
@@ -71,4 +91,11 @@ export const download = (name, dstFolder, paths) => {
         fs.writeFileSync(`${dstFolder}/${item.fileName}`, item.data, "base64");
     });
     console.log("ok");
+};
+
+export const runEmulator = (emulator, file) => {
+    const cmdArray = {
+        fuse: `open -a fuse ${file}`,
+    };
+    execSync(cmdArray[emulator]);
 };

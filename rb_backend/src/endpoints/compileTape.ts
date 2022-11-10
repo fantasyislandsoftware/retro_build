@@ -99,27 +99,27 @@ export const compileTape = (app: any) => {
       const tapeFileInfo = getPathInfo(name, pathTapeFile, pathResolver);
 
       /* Replace org in basic file */
-      const basicFileData = fs
+      /*const basicFileData = fs
         .readFileSync(`${basicFileInfo.fullPath}/${basicFileInfo.fileName}`)
         .toString();
       fs.writeFileSync(
         `${basicFileInfo.fullPath}/${basicFileInfo.fileName}`,
         basicFileData.replaceAll("${org}", env.org)
-      );
+      );*/
 
       /* Create tape file with basic file */
-      const cmd = `cd ${basicFileInfo.fullPath} && wine /home/node/app/bin/x86/tools/bas2tap.exe -s${name} -a ${basicFileInfo.fileName} ${tapeFileInfo.fullPath}/${tapeFileInfo.fileName}`;
-      execSync(cmd);
+      //const cmd = `cd ${basicFileInfo.fullPath} && DISPLAY=:0.0 wine /home/node/app/bin/x86/tools/bas2tap.exe -s${name} -a -w -c -q ${basicFileInfo.fileName} ${tapeFileInfo.fullPath}/${tapeFileInfo.fileName}`;
+      //execSync(cmd);
 
       /* Add blocks to tape file */
 
       /* Convert tape file to array */
-      let tapeFileArray = bufferToArray(
-        fs.readFileSync(`${tapeFileInfo.fullPath}/${tapeFileInfo.fileName}`)
-      );
+      //let tapeFileArray = bufferToArray(
+      //  fs.readFileSync(`${tapeFileInfo.fullPath}/${tapeFileInfo.fileName}`)
+      //);
 
       /* Loop through tape blocks */
-      const tapeBlocksFileJson = loadJsonWithConverterdVars(
+      /*const tapeBlocksFileJson = loadJsonWithConverterdVars(
         env,
         `${tapeBlocksFileInfo.fullPath}/${tapeBlocksFileInfo.fileName}`
       );
@@ -128,7 +128,7 @@ export const compileTape = (app: any) => {
         const arr = bin2tapArray(
           `${workspacePath}${pathResolver[item.path]}/${item.fileName}`,
           item.name,
-          50000
+          item.address
         );
         tapeFileArray = tapeFileArray.concat(arr);
       });
@@ -136,7 +136,7 @@ export const compileTape = (app: any) => {
       fs.writeFileSync(
         `${tapeFileInfo.fullPath}/${tapeFileInfo.fileName}`,
         buffer
-      );
+      );*/
 
       res.json([]);
     } catch (error) {

@@ -15,6 +15,7 @@ export const handlePostRequest = (endpoint, json) => {
             if (data.error) {
                 console.log('');
                 console.log(data.error);
+                process.exit();
             }
             return data;
         } else {
